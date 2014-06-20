@@ -18,10 +18,8 @@ java -XX:-TieredCompilation -jar target/microbenchmarks.jar ".*Limit.*"
 @Fork(1)
 public class Limit {
 
-//    @Param( {"1", "10", "100", "1000", "10000", "100000", "1000000" })
-    public int N=100000;
+    private final int N=100000;
 
-    private final int Q = 50;
     private final int P = 4;
 
     private List<Integer> integerList;
