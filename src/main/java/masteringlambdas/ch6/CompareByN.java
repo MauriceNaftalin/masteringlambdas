@@ -1,7 +1,7 @@
-package mastering.performance.performancechapter;
+package mastering.performance.ch6;
 
 import org.openjdk.jmh.annotations.*;
-import org.openjdk.jmh.logic.BlackHole;
+import org.openjdk.jmh.infra.Blackhole;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,43 +13,42 @@ import static java.util.stream.Collectors.toList;
 @Fork(1)
 public class CompareByN {
 
-    @Param( {"1", "10", "100", "1000", "10000", "100000", "1000000" })
+    @Param({"1", "10", "100", "1000", "10000", "100000", "1000000"})
     public int N;
 
-    private final int Q = 500;
-    private final int P = 4;
+    @Param({"5", "50", "500"})
+    public int Q;
 
     private List<Integer> integerList;
 
     @Setup(Level.Trial)
     public void setUp() {
         integerList = IntStream.range(0, N).boxed().collect(toList());
-        System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", Integer.toString(P));
     }
 
-    @GenerateMicroBenchmark
-    public void loop(BlackHole bh) {
+    @Benchmark
+    public void iterative(Blackhole bh) {
         for (Integer i : integerList) {
-            BlackHole.consumeCPU(Q);
+            Blackhole.consumeCPU(Q);
             bh.consume(i);
         }
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public Optional<Integer> sequential() {
         return integerList.stream()
                 .filter(l -> {
-                    BlackHole.consumeCPU(Q);
+                    Blackhole.consumeCPU(Q);
                     return false;
                 })
                 .findFirst();
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public Optional<Integer> parallel() {
         return integerList.stream().parallel()
                 .filter(l -> {
-                    BlackHole.consumeCPU(Q);
+                    Blackhole.consumeCPU(Q);
                     return false;
                 })
                 .findFirst();
