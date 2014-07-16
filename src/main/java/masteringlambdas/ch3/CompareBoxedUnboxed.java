@@ -1,4 +1,4 @@
-package mastering.performance.ch3;
+package masteringlambdas.ch3;
 
 import org.openjdk.jmh.annotations.*;
 
