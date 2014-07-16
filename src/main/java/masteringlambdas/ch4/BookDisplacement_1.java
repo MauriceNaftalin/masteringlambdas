@@ -1,4 +1,4 @@
-package mastering.performance.ch4;
+package masteringlambdas.ch4;
 
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
