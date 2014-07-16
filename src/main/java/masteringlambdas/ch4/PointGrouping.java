@@ -27,7 +27,6 @@ public class PointGrouping {
 
     @Setup(Level.Trial)
     public void setUp() {
-        //        List<Point> Points = Arrays.asList(new Point(21,0),new Point(33,0),new Point(35,0),new Point(23,1),new Point(25,-1),new Point(31,0));
         Random r = new Random();
         points = new ArrayList<>();
         for (int i = 0; i < 20000; i++) {
