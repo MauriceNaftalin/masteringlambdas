@@ -10,10 +10,6 @@ import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
 
-/*
-java -XX:-TieredCompilation -jar target/microbenchmarks.jar ".*Sorted.*"
-*/
-
 @State(Scope.Benchmark)
 @Fork(1)
 public class Sorted {
@@ -21,7 +17,16 @@ public class Sorted {
     @Param( {"100", "1000", "10000", "100000", "1000000", "10000000" })
     public int N;
 
+    @Param( {"0", "100" })
+    public int Q;
+
     private List<Integer> iterativeList, streamList;
+
+    public static void main(String[] args) {
+        Sorted s = new Sorted();
+        s.setUp();
+        System.out.println(s.iterativeList);
+    }
 
     @Setup(Level.Trial)
     public void setUp() {
@@ -37,6 +42,9 @@ public class Sorted {
 
     @Benchmark
     public List<Integer> iterative() {
+        for (Integer i : iterativeList) {
+            Blackhole.consumeCPU(Q);
+        }
         Collections.sort(iterativeList);
         return iterativeList;
     }
@@ -44,6 +52,7 @@ public class Sorted {
     @Benchmark
     public Optional<Integer> sequential() {
         return streamList.stream()
+                .peek(i -> Blackhole.consumeCPU(Q))
                 .sorted()
                 .filter(l -> false)
                 .findFirst();
@@ -52,6 +61,7 @@ public class Sorted {
     @Benchmark
     public Optional<Integer> parallel() {
         return streamList.stream().parallel()
+                .peek(i -> Blackhole.consumeCPU(Q))
                 .sorted()
                 .filter(l -> false)
                 .findFirst();
