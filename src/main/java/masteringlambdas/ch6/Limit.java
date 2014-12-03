@@ -30,7 +30,7 @@ public class Limit {
         System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", Integer.toString(P));
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public Optional<Integer> sequentialOrderedNoLimit() {
         return integerList.stream()
 //                .parallel()
@@ -40,7 +40,7 @@ public class Limit {
                 .findFirst();
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public Optional<Integer> sequentialOrderedLimit() {
         return integerList.stream()
 //                .parallel()
@@ -50,7 +50,7 @@ public class Limit {
                 .findFirst();
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public Optional<Integer> sequentialUnorderedNoLimit() {
         return integerList.stream()
 //                .parallel()
@@ -60,7 +60,7 @@ public class Limit {
                 .findFirst();
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public Optional<Integer> sequentialUnorderedLimit() {
         return integerList.stream()
 //                .parallel()
@@ -70,7 +70,7 @@ public class Limit {
                 .findFirst();
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public Optional<Integer> parallelOrderedNoLimit() {
         return integerList.stream()
                 .parallel()
@@ -81,7 +81,7 @@ public class Limit {
     }
 
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public Optional<Integer> parallelOrderedLimit() {
         return integerList.stream()
                 .parallel()
@@ -92,7 +92,7 @@ public class Limit {
     }
 
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public Optional<Integer> parallelUnorderedNoLimit() {
         return integerList.stream()
                 .parallel()
@@ -103,7 +103,7 @@ public class Limit {
     }
 
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public Optional<Integer> parallelUnorderedLimit() {
         return integerList.stream()
                 .parallel()

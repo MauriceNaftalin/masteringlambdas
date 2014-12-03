@@ -1,7 +1,7 @@
 package mastering.performance.performancechapter;
 
 import org.openjdk.jmh.annotations.*;
-import org.openjdk.jmh.logic.BlackHole;
+import org.openjdk.jmh.infra.Blackhole;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,29 +27,29 @@ public class CompareByQ {
         System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", Integer.toString(P));
     }
 
-    @GenerateMicroBenchmark
-    public void loop(BlackHole bh) {
+    @Benchmark
+    public void loop(Blackhole bh) {
         for (Integer i : integerList) {
-            BlackHole.consumeCPU(Q);
+            Blackhole.consumeCPU(Q);
             bh.consume(i);
         }
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public Optional<Integer> sequential() {
         return integerList.stream()
                 .filter(l -> {
-                    BlackHole.consumeCPU(Q);
+                    Blackhole.consumeCPU(Q);
                     return false;
                 })
                 .findFirst();
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public Optional<Integer> parallel() {
         return integerList.stream().parallel()
                 .filter(l -> {
-                    BlackHole.consumeCPU(Q);
+                    Blackhole.consumeCPU(Q);
                     return false;
                 })
                 .findFirst();
