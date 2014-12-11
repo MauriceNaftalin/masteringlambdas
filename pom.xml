@@ -40,11 +40,6 @@ THE POSSIBILITY OF SUCH DAMAGE.
 
     <name>JMH benchmark sample: Java</name>
 
-    <!--
-       This is the demo/sample template build script for building Java benchmarks with JMH.
-       Edit as needed.
-    -->
-
     <prerequisites>
         <maven>3.0</maven>
     </prerequisites>
@@ -61,6 +56,13 @@ THE POSSIBILITY OF SUCH DAMAGE.
             <version>${jmh.version}</version>
             <scope>provided</scope>
         </dependency>
+<!--
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.6</version>
+        </dependency>
+-->
     </dependencies>
 
     <properties>
@@ -76,10 +78,25 @@ THE POSSIBILITY OF SUCH DAMAGE.
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
+                <executions>
+                    <execution>
+                        <id>default-testCompile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </execution>
+                </executions>
                 <configuration>
                     <compilerVersion>${javac.target}</compilerVersion>
                     <source>${javac.target}</source>
                     <target>${javac.target}</target>
+                    <includes>
+                        <include>org/masteringlambdas/performance/**</include>
+                    </includes>
                 </configuration>
             </plugin>
             <plugin>
