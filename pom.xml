@@ -96,6 +96,7 @@ THE POSSIBILITY OF SUCH DAMAGE.
                     <target>${javac.target}</target>
                     <includes>
                         <include>org/masteringlambdas/performance/**</include>
+                        <include>masteringlambdas/ch6/**</include>
                     </includes>
                 </configuration>
             </plugin>
